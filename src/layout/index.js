@@ -1,9 +1,10 @@
 import { Component } from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Input } from 'antd';
 import Link from 'umi/link';
 
 const {Header, Footer, Content, Sider} = Layout;
 const SubMenu = Menu.SubMenu;
+const {Search} = Input;
 
 export default class BasicLayout extends Component {
   render() {
@@ -29,7 +30,13 @@ export default class BasicLayout extends Component {
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{backgroundColor: '#fff', textAlign: 'center', padding: 0}}>顶部</Header>
+          <Header style={{backgroundColor: '#fff', textAlign: 'center', padding: 0}}>
+            <Search 
+              placeholder="搜索" 
+              onSearch={value=> console.log(value)} 
+              style={{width: 200, marginLeft: '60%'}} 
+            />
+          </Header>
           <Content style={{margin: '24px 16px 0'}}>
             <div style={{padding: '24px', backgroundColor: 'white', minHeight: '360px'}}>
               {this.props.children}

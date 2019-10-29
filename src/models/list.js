@@ -4,11 +4,33 @@ const delay = (millisecond) => {
   });
 };
 
+const request = (url, options) => {
+  console.log("url", url)
+  return fetch(url, options)
+  .then(response => {
+    
+  return response.json();
+  })
+  .catch(err => ({ err }));
+}
+
 export default {
   namespace: 'cards',
-  state:{cardsList:[]},
+  state:{
+    cardsList:[],
+    statistic:[]
+  },
 
   effects: {
+    *getStatistic(_, sagaEffects){
+      
+      const {call, put} = sagaEffects;
+      const endPointURI = '/dev/chart-data';
+      const chart = yield call(request, endPointURI);
+      console.log(chart)
+      yield put({ type: 'initChart', payload: chart });
+
+    },
     *queryList(_, {call, put}){
       console.log('query')
       const listData = [{
@@ -33,14 +55,31 @@ export default {
 
       yield put({ type: 'initList', payload: listData });
 
-    }
+    },
+
 
   },
 
   reducers: {
+
+    initChart(state,{payload}){
+      const statistic = [...payload]
+      console.log('statistic',statistic)
+      return {
+        statistic
+      }
+    },
+
     initList(state,{payload}){
       const cardsList = [...payload]
       console.log(cardsList)
+      return {
+        cardsList
+      }
+    },
+    addOne(state,{payload}){     
+      const list=state.cardsList
+      const cardsList = [...list, payload]
       return {
         cardsList
       }

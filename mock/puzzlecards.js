@@ -12,18 +12,72 @@ const random_jokes = [
     body: 'A satisfactory',
   },
 ];
-//let random_joke_call_count = 0;
+
+
+const chart_data = {
+  result: [
+    { genre: 'Sports', sold: 275 },
+    { genre: 'Strategy', sold: 1150 },
+    { genre: 'Action', sold: 120 },
+    { genre: 'Shooter', sold: 350 },
+    { genre: 'Other', sold: 150 },
+  ]
+}
+
+
+
+
+
+
 export default {
   'get /dev/random_joke': function (req, res) {
 
     const responseObj = random_jokes[randomNum(0,2)];
     console.log(responseObj)
-    random_joke_call_count += 1;
+
+    setTimeout(() => {
+      res.json(responseObj);
+    }, 500);
+  },
+  'get /dev/chart-data': function (req, res) {
+
+    const responseObj = chart_data.result;
+    console.log(responseObj)
+
     setTimeout(() => {
       res.json(responseObj);
     }, 500);
   },
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function randomNum(minNum,maxNum){ 
   switch(arguments.length){ 
